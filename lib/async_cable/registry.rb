@@ -9,6 +9,7 @@ module AsyncCable
 
     single_delegate [:add, :remove, :find, :all] => :instance
 
+    # Adds connection to registry.
     # @param channel_name [String]
     # @param stream_name [String]
     # @param connection [AsyncCable::Connection]
@@ -19,6 +20,7 @@ module AsyncCable
       end
     end
 
+    # Removes connection from registry.
     # @param channel_name [String]
     # @param stream_name [String]
     # @param connection [AsyncCable::Connection]
@@ -30,18 +32,17 @@ module AsyncCable
       end
     end
 
-    # @param channel_name [String]
+    # Return all connections from all channels when `channel_name` omitted.
+    # Return all connections from channel when `stream_name` omitted.
+    # Return connections from channel stream when `channel_name` and `stream_name` provided.
+    # @param channel_name [String,NilClass]
     # @param stream_name [String,NilClass]
-    def find(channel_name, stream_name = nil)
+    # @return [Array<AsyncCable::Connection>,Array]
+    def find(channel_name = nil, stream_name = nil)
       @mutex.synchronize do
+        return subscribers.values.map(&:values).flatten if channel_name.nil?
         return subscribers[channel_name].values.flatten if stream_name.nil?
         subscribers[channel_name][stream_name]
-      end
-    end
-
-    def all
-      @mutex.synchronize do
-        subscribers
       end
     end
 

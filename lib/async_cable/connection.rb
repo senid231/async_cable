@@ -4,15 +4,17 @@ require 'protocol/websocket/error'
 module AsyncCable
   class Connection < Async::WebSocket::Connection
 
-    class_attribute :channel_name, instance_writer: false
-
     class << self
       def inherited(subclass)
-        subclass.channel_name = subclass.name.demodulize.underscore
+        subclass.identified_as subclass.name.demodulize.underscore
       end
 
       def identified_as(channel)
-        self.channel_name = channel.to_s
+        @channel_name = channel.to_s
+      end
+
+      def channel_name
+        @channel_name
       end
 
       def logger
@@ -55,8 +57,9 @@ module AsyncCable
     end
 
     # call this method to transmit data to current WS client
+    # @param data [Hash]
     def transmit(data)
-      logger.debug { "AsyncCable::Connection#send_command identifier=#{identifier} data=#{data.inspect}" }
+      logger.debug { "#{self.class}#transmit identifier=#{identifier} data=#{data.inspect}" }
 
       @mutex.synchronize do
         write(data)
@@ -107,6 +110,10 @@ module AsyncCable
       close
       Registry.remove(channel_name, stream_name, self)
       on_close
+    end
+
+    def channel_name
+      self.class.channel_name
     end
 
     def logger
