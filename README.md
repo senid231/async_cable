@@ -92,6 +92,10 @@ example of JS code for connecting with websocket server
   };
 ```
 
+## Development
+
+will use [Semver](https://semver.org) from version `1.0.0`
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/senid231/async_cable. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/async_cable/blob/master/CODE_OF_CONDUCT.md).
