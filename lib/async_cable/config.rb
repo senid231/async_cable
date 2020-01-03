@@ -1,3 +1,4 @@
+require 'anyway_config'
 require 'null_logger'
 
 module AsyncCable

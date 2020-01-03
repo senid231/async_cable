@@ -16,7 +16,7 @@ module AsyncCable
 
   def broadcast(data)
     config.logger.debug { "#{name}.broadcast data=#{data.inspect}" }
-    Registry.find.each { |conn| conn.transmit(data) }
+    Registry.each { |conn| conn.transmit(data) }
   end
 
   module_function :configure, :config, :broadcast

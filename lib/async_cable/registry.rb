@@ -46,6 +46,15 @@ module AsyncCable
       end
     end
 
+    # Iterate connections asynchronously.
+    # @param channel_name [String,NilClass]
+    # @param stream_name [String,NilClass]
+    # @yield connection [AsyncCable::Connection]
+    def each(channel_name = nil, stream_name = nil, &block)
+      list = find(channel_name, stream_name)
+      Util.each_async(list, &block)
+    end
+
     private
 
     def subscribers

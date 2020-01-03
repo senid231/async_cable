@@ -26,7 +26,7 @@ module AsyncCable
       def broadcast(stream_name, data)
         logger.debug { "#{name}.broadcast data=#{data.inspect}" }
 
-        Registry.find(channel_name, stream_name).each do |conn|
+        Registry.each(channel_name, stream_name) do |conn|
           conn.transmit(data) unless conn.closed?
         end
       end
