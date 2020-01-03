@@ -94,6 +94,11 @@ example of JS code for connecting with websocket server
 
 ## Development
 
+### Building version
+
+    gem_push=false rake release
+    gem push pkg/async_cable-X.Y.Z.gem
+
 will use [Semver](https://semver.org) from version `1.0.0`
 
 ## Contributing
