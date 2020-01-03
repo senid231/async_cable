@@ -1,6 +1,8 @@
 # Changelog
 
 ### Unreleased
+
+### 0.2.1
 * fix registry
 
 ### 0.2.0
