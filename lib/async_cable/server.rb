@@ -41,8 +41,6 @@ module AsyncCable
       response || [400, { 'Content-Type' => 'text/plain' }, ['Not valid ws']]
     end
 
-    private
-
     def logger
       AsyncCable.config.logger
     end

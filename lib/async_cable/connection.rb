@@ -9,14 +9,17 @@ module AsyncCable
         subclass.identified_as subclass.name.demodulize.underscore
       end
 
+      # sets #channel_name for connection class
       def identified_as(channel)
         @channel_name = channel.to_s
       end
 
+      # @return [String]
       def channel_name
         @channel_name
       end
 
+      # @return [Logger]
       def logger
         AsyncCable.config.logger
       end
@@ -77,6 +80,8 @@ module AsyncCable
       @stream_name
     end
 
+    # @param reason [String,NilClass] exception message.
+    # @raise [AsyncCable::UnauthorizedError]
     def reject_unauthorized(reason = nil)
       raise UnauthorizedError, reason
     end
@@ -94,6 +99,7 @@ module AsyncCable
       close_code == Protocol::WebSocket::Error::NO_ERROR
     end
 
+    # Called when connection being opened.
     # @param env [Hash]
     # @raise [AsyncCable::Errors::StreamNameNotSet] if #stream_for was not called
     # @raise [AsyncCable::Errors::UnauthorizedError] if #reject_unauthorized was called
@@ -105,6 +111,8 @@ module AsyncCable
       Registry.add(channel_name, stream_name, self)
     end
 
+    # Called when connection being closed.
+    # @see #close_code #close_reason for close details.
     def handle_close
       logger.debug { "#{self.class}#handle_close clean=#{close_clean?} code=#{close_code} reason=#{close_reason}" }
       close
@@ -112,10 +120,12 @@ module AsyncCable
       on_close
     end
 
+    # @return [String]
     def channel_name
       self.class.channel_name
     end
 
+    # @return [Logger]
     def logger
       self.class.logger
     end

@@ -7,7 +7,7 @@ module AsyncCable
     extend SingleForwardable
     @mutex = Mutex.new
 
-    single_delegate [:add, :remove, :find, :all] => :instance
+    single_delegate [:add, :remove, :find, :each] => :instance
 
     # Adds connection to registry.
     # @param channel_name [String]
