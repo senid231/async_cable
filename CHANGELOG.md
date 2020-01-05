@@ -1,6 +1,8 @@
 # Changelog
 
 ### Unreleased
+
+### 0.2.2
 * fix connection logging
 * fix registry
 * fix server exception handling
