@@ -28,7 +28,7 @@ module AsyncCable
         logger.debug { "#{self.class}#call rescue #{error.class} message=#{error.message} code=#{error.code}" }
         connection.close_code = error.code
         connection.close_reason = error.message
-      rescue AsyncCable::Connection::Error => error
+      rescue AsyncCable::Errors::Error => error
         connection.close_code = error.code
         connection.close_reason = error.message
       ensure

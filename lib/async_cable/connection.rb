@@ -62,7 +62,7 @@ module AsyncCable
     # call this method to transmit data to current WS client
     # @param data [Hash]
     def transmit(data)
-      logger.debug { "#{self.class}#transmit identifier=#{identifier} data=#{data.inspect}" }
+      logger.debug { "#{self.class}#transmit stream_name=#{stream_name} data=#{data.inspect}" }
 
       @mutex.synchronize do
         write(data)

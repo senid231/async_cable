@@ -5,7 +5,6 @@ module AsyncCable
   class Registry
     include Singleton
     extend SingleForwardable
-    @mutex = Mutex.new
 
     single_delegate [:add, :remove, :find, :each] => :instance
 
@@ -55,6 +54,11 @@ module AsyncCable
       Util.each_async(list, &block)
     end
 
+    def init_mutex
+      @mutex ||= Mutex.new
+      true
+    end
+
     private
 
     def subscribers
@@ -63,9 +67,10 @@ module AsyncCable
 
     def new_subscribers
       Hash.new do |hash, channel_name|
-        hash[channel_name] = Hash.new { |h, stream_name| h[stream_name] = []; h }
-        hash
+        hash[channel_name] = Hash.new { |h, stream_name| h[stream_name] = [] }
       end
     end
+
+    instance.init_mutex
   end
 end
