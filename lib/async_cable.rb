@@ -1,4 +1,5 @@
 require 'async_cable/version'
+require 'async_cable/util'
 require 'async_cable/errors'
 require 'async_cable/config'
 require 'async_cable/registry'
